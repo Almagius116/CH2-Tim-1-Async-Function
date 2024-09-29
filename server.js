@@ -2,6 +2,7 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const functionTim1 = require('./function.js');
+const aqsaFunction = require('./Aqsa.js');
 const file = './index.txt';
 
 const server =http.createServer((req,res) => {
@@ -23,7 +24,18 @@ const server =http.createServer((req,res) => {
     } else if(pathUrl === "/write"){
         functionTim1.writeFile(file)
         res.end('index.txt sudah di rewrite');
-    }else{
+    } else if(pathUrl === "/aqsa") {
+        async function aqsaRewrite() {
+            try {
+                const result = await aqsaFunction.rewrite(file);
+                res.end(result);
+            } catch (error) {
+                console.log(error);
+                res.end(error);
+            }
+        }
+        aqsaRewrite();
+    } else{
         res.end("404");
     }
 })
