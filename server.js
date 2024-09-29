@@ -3,14 +3,15 @@ const url = require("url");
 const fs = require("fs");
 const functionTim1 = require('./function.js');
 const aqsaFunction = require('./Aqsa.js');
+const rizalFunction = require('./rizal.js')
 const file = './index.txt';
 
-const server =http.createServer((req,res) => {
+const server = http.createServer((req, res) => {
     const pathUrl = req.url;
 
-    if(pathUrl === "/"){
+    if (pathUrl === "/") {
         res.end("Tim 1 Async Function");
-    } else if(pathUrl === "/read"){
+    } else if (pathUrl === "/read") {
         async function result() {
             try {
                 const readFile = await functionTim1.readFile(file);
@@ -21,10 +22,10 @@ const server =http.createServer((req,res) => {
             }
         }
         result()
-    } else if(pathUrl === "/write"){
+    } else if (pathUrl === "/write") {
         functionTim1.writeFile(file)
         res.end('index.txt sudah di rewrite');
-    } else if(pathUrl === "/aqsa") {
+    } else if (pathUrl === "/aqsa") {
         async function aqsaRewrite() {
             try {
                 const result = await aqsaFunction.rewrite(file);
@@ -35,10 +36,20 @@ const server =http.createServer((req,res) => {
             }
         }
         aqsaRewrite();
-    } else{
+    } else if (pathUrl === "/rizal") {
+        async function rizalRewrite() {
+            try {
+                const result = await rizalFunction.rewrite(file);
+                res.end(result);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        rizalRewrite();
+    } else {
         res.end("404");
     }
-})
+});
 
 server.listen(3000, '127.0.0.1', () => {
     console.log('Aplikasi ini berjalan di port 3000');
