@@ -6,6 +6,7 @@ const aqsaFunction = require("./Aqsa.js");
 const rizalFunction = require("./rizal.js");
 const ferdiFunction = require("./ferdi.js");
 const iqmalFunction = require("./iqmal.js");
+const nandaFunction = require("./nanda.js");
 const file = "./index.txt";
 
 const server = http.createServer((req, res) => {
@@ -72,6 +73,18 @@ const server = http.createServer((req, res) => {
       }
     }
     iqmalRewrite();
+  } else if(pathUrl === "/nanda") {
+    async function nandaRewrite() {
+      try{
+        const result = await nandaFunction.rewrite(file);
+        res.end(result);
+      } catch(error) {
+        console.error("Erorr in Nanda rewrite: ", error);
+        res.statusCode = 500;
+        res.end("Error in Nanda rewrite!");
+      }
+    }
+    nandaRewrite();
   } else {
     res.end("404");
   }
