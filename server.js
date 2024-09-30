@@ -7,6 +7,7 @@ const rizalFunction = require("./rizal.js");
 const ferdiFunction = require("./ferdi.js");
 const iqmalFunction = require("./iqmal.js");
 const nandaFunction = require("./nanda.js");
+const raihanFunction = require("./raihan.js");
 const file = "./index.txt";
 
 const server = http.createServer((req, res) => {
@@ -64,7 +65,10 @@ const server = http.createServer((req, res) => {
   } else if (pathUrl === "/iqmal") {
     async function iqmalRewrite() {
       try {
-        const getData = await iqmalFunction.rewrite(file, "This is iqmal's function");
+        const getData = await iqmalFunction.rewrite(
+          file,
+          "This is iqmal's function"
+        );
         res.end(getData);
       } catch (error) {
         console.error("Error in Iqmal rewrite:", error);
@@ -73,18 +77,30 @@ const server = http.createServer((req, res) => {
       }
     }
     iqmalRewrite();
-  } else if(pathUrl === "/nanda") {
+  } else if (pathUrl === "/nanda") {
     async function nandaRewrite() {
-      try{
+      try {
         const result = await nandaFunction.rewrite(file);
         res.end(result);
-      } catch(error) {
+      } catch (error) {
         console.error("Erorr in Nanda rewrite: ", error);
         res.statusCode = 500;
         res.end("Error in Nanda rewrite!");
       }
     }
     nandaRewrite();
+  } else if (pathUrl === "/raihan") {
+    async function yourNameRewrite() {
+      try {
+        const result = await raihanFunction.rewrite(file);
+        res.end(result);
+      } catch (error) {
+        console.error("Error in yourName rewrite:", error);
+        res.statusCode = 500;
+        res.end("Error in yourName rewrite.");
+      }
+    }
+    yourNameRewrite();
   } else {
     res.end("404");
   }
