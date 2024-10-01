@@ -8,6 +8,7 @@ const ferdiFunction = require("./ferdi.js");
 const iqmalFunction = require("./iqmal.js");
 const nandaFunction = require("./nanda.js");
 const raihanFunction = require("./raihan.js");
+const hanipFunction = require("./hanip.js");
 const file = "./index.txt";
 
 const server = http.createServer((req, res) => {
@@ -101,7 +102,19 @@ const server = http.createServer((req, res) => {
       }
     }
     yourNameRewrite();
-  } else {
+  } else if (pathUrl === "/hanip") {
+    async function hanipRewrite() {
+      try {
+        const result = await hanipFunction.rewrite(file);
+        res.end(result);
+      } catch (error) {
+        console.error("Error in hanip rewrite:", error);
+        res.statusCode = 500;
+        res.end("Error in hanip rewrite.");
+      }
+    }
+    hanipRewrite();
+  }else {
     res.end("404");
   }
 });
